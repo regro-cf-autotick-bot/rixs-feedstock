@@ -6,20 +6,20 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 9c563f92f34db46cd9d01ac1ba3e9c7b41cf206d42dc635bf031ad8ec1cbc0db
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - matplotlib-base
     - numpy
     - pandas
@@ -30,6 +30,7 @@ test:
     - rixs
   requires:
     - pytest
+    - python {{ python_min }}
   commands:
     - pytest --pyargs rixs.tests
 
